@@ -16,12 +16,12 @@
   <meta name="author" content="wuhaodong">
   <meta name="keywords" content="">
   
-    <meta name="description" content="锁ReentrantLock类jdk1.5中新增，具有嗅探锁定、多路分支通知等功能。 实现同步创建线程类MyThread： 1234567891011121314public class MyThread extends Thread &amp;#123;	private MyService service;	public MyThread(MyService service) &amp;#123;		super">
+    <meta name="description" content="锁锁从乐观和悲观的角度可分为乐观锁和悲观锁，从获取资源的公平性角度可分为公平锁和非公平锁，从是否共享资源的角度可分为共享锁和独占锁，从锁的状态可分为偏向锁、轻量级锁和重量级锁。JVM中还有自旋锁。 乐观锁乐观锁采用乐观的思想处理数据，在每次读取数据时都认为别人不会修改该数据，所以不会上锁，但在更新时会判断再在此期间别人有没有更新该数据，通常采用在写时先读出当前版本号然后加锁的方法。  具体过程为：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="锁">
 <meta property="og:url" content="https://wuhaodonggg.github.io/2023/02/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E9%94%81/index.html">
 <meta property="og:site_name" content="氵告 东">
-<meta property="og:description" content="锁ReentrantLock类jdk1.5中新增，具有嗅探锁定、多路分支通知等功能。 实现同步创建线程类MyThread： 1234567891011121314public class MyThread extends Thread &amp;#123;	private MyService service;	public MyThread(MyService service) &amp;#123;		super">
+<meta property="og:description" content="锁锁从乐观和悲观的角度可分为乐观锁和悲观锁，从获取资源的公平性角度可分为公平锁和非公平锁，从是否共享资源的角度可分为共享锁和独占锁，从锁的状态可分为偏向锁、轻量级锁和重量级锁。JVM中还有自旋锁。 乐观锁乐观锁采用乐观的思想处理数据，在每次读取数据时都认为别人不会修改该数据，所以不会上锁，但在更新时会判断再在此期间别人有没有更新该数据，通常采用在写时先读出当前版本号然后加锁的方法。  具体过程为：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E9%94%81/image-20230226210501244.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E9%94%81/image-20230226211817886.png">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E9%94%81/image-20230227144149082.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E9%94%81/image-20230227144535130.png">
 <meta property="article:published_time" content="2023-02-26T12:56:23.000Z">
-<meta property="article:modified_time" content="2023-02-27T15:04:42.448Z">
+<meta property="article:modified_time" content="2023-03-11T23:13:53.088Z">
 <meta property="article:author" content="wuhaodong">
 <meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary_large_image">
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          90 分钟
+          100 分钟
         
       </span>
     
@@ -310,7 +310,22 @@
             
               <div class="markdown-body">
                 
-                <h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><h2 id="ReentrantLock类"><a href="#ReentrantLock类" class="headerlink" title="ReentrantLock类"></a>ReentrantLock类</h2><p>jdk1.5中新增，具有嗅探锁定、多路分支通知等功能。</p>
+                <h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><p>锁从乐观和悲观的角度可分为乐观锁和悲观锁，从获取资源的公平性角度可分为公平锁和非公平锁，从是否共享资源的角度可分为共享锁和独占锁，从锁的状态可分为偏向锁、轻量级锁和重量级锁。JVM中还有自旋锁。</p>
+<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>乐观锁采用乐观的思想处理数据，在每次读取数据时都认为别人不会修改该数据，所以不会上锁，但在更新时会判断再在此期间别人有没有更新该数据，通常采用在写时先读出当前版本号然后加锁的方法。</p>
+<blockquote>
+<p>具体过程为：比较当前版本号与上一次版本号，如果版本号一致，则更新，如果版本号不一致，则重复进行读，比较，写操作。</p>
+</blockquote>
+<p>Java中的乐观锁大部分是通过CAS（Compare And Swap，比较和交换）操作实现的，CAS是一种原子更新操作，在对数据操作之前首先会比较当前值跟传入的值是否一样，如果一样则更新，否则不执行更新操作，直接返回失败状态。</p>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>悲观锁采用悲观思想处理数据，在每次读取数据时都认为别人会修改数据，所以每次在读写数据时都会上锁，这样别人想读写这个数据时就会阻塞，等待直到拿到锁。</p>
+<p>Java中的悲观锁大部分基于AQS（Abstract Queued Synchronized，抽象的队列同步器）架构实现。AQS定义了一套多线程访问共享资源的同步框架，许多同步类的实现都依赖于它，例如常用的Synchronized、ReentrantLock、Semaphore、CountDownLatch等。该框架下的锁会先尝试以CAS乐观锁去获取锁，如果获取不到，则会转为悲观锁（如RetreenLock）。</p>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><p>自旋锁认为：如果持有锁的线程能在很短的时间内释放锁资源，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞、挂起状态，只需等一等（也叫自旋），在等待持有锁的线程释放锁后即可立即获取锁，这样就避免了用户线程在内核态的切换上导致的锁时间消耗。</p>
+<blockquote>
+<p>线程在自旋时会占用CPU，在线程长时间自旋获取不到锁时，将会产生CPU的浪费，甚至有时线程永远无法获取锁导致CPU资源被永久占用，所以需要设定一个自旋等待的最大时间。在线程执行的时间超过自旋等待的最大时间后，线程会退出自旋模式并释放其持有的锁。</p>
+</blockquote>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>自旋锁可以减少CPU上下文的切换，对于占用锁的时间非常短或锁竞争不激烈的代码块来说性能大幅度提升，因为自旋的CPU耗时明显少于线程阻塞、挂起、再唤醒时两次CPU上下文切换所用的时间。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>在持有锁的线程占用锁时间过长或锁的竞争过于激烈时，线程在自旋过程中会长时间获取不到锁资源，将引起CPU的浪费。所以在系统中有复杂锁依赖的情况下不适合采用自旋锁。</p>
+<h4 id="时间阈值"><a href="#时间阈值" class="headerlink" title="时间阈值"></a>时间阈值</h4><p>JDK的不同版本所采用的自旋周期不同，JDK1.5为固定的时间，JDK1.6引入了适应性自旋锁。适应性自旋锁的自选时间不再是固定值，而是由上一次在 同一个锁上的自旋时间及锁的拥有者的状态来决定的，可基本认为一个线程上下文切换的时间就是一个最佳时间。</p>
+<h2 id="ReentrantLock类"><a href="#ReentrantLock类" class="headerlink" title="ReentrantLock类"></a>ReentrantLock类</h2><p>jdk1.5中新增，具有嗅探锁定、多路分支通知等功能。</p>
 <h3 id="实现同步"><a href="#实现同步" class="headerlink" title="实现同步"></a>实现同步</h3><p>创建线程类MyThread：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Thread</span> &#123;<br><br>	<span class="hljs-keyword">private</span> MyService service;<br><br>	<span class="hljs-keyword">public</span> <span class="hljs-title function_">MyThread</span><span class="hljs-params">(MyService service)</span> &#123;<br>		<span class="hljs-built_in">super</span>();<br>		<span class="hljs-built_in">this</span>.service = service;<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>		service.testMethod();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -609,6 +624,12 @@
   
 
 
+  
+  
+
+
+
+
 
 
 
@@ -825,6 +846,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/js/leancloud.js" ></script>
 

@@ -16,13 +16,14 @@
   <meta name="author" content="wuhaodong">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Synchronized关键字Synchronized在字节码中的原理在方法上使用synchronized关键字实现同步的原因是使用了flag标记ACC_SYNCHRONIZED，当调用方法时，调用指令将会检查方法的ACC_SYNCHRONIZED访问标志是否设置，如果设置了，执行线程先持有同步锁，然后执行方法，最后在方法完成时释放锁。 在方法中使用Synchronized关键字测试代码： 123">
+    <meta name="description" content="Synchronized关键字synchronized关键字用于为Java对象、方法、代码块提供线程安全的操作。 synchronized属于独占式的悲观锁，同时属于可重入锁。 Synchronized在字节码中的原理在synchronized内部包括ContentionList、EntryList、WaitSet、OnDeck、Owner、!Owner 6个区域，每个区域都代表锁的不同状态。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="synchronized关键字">
 <meta property="og:url" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/index.html">
 <meta property="og:site_name" content="氵告 东">
-<meta property="og:description" content="Synchronized关键字Synchronized在字节码中的原理在方法上使用synchronized关键字实现同步的原因是使用了flag标记ACC_SYNCHRONIZED，当调用方法时，调用指令将会检查方法的ACC_SYNCHRONIZED访问标志是否设置，如果设置了，执行线程先持有同步锁，然后执行方法，最后在方法完成时释放锁。 在方法中使用Synchronized关键字测试代码： 123">
+<meta property="og:description" content="Synchronized关键字synchronized关键字用于为Java对象、方法、代码块提供线程安全的操作。 synchronized属于独占式的悲观锁，同时属于可重入锁。 Synchronized在字节码中的原理在synchronized内部包括ContentionList、EntryList、WaitSet、OnDeck、Owner、!Owner 6个区域，每个区域都代表锁的不同状态。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230309170805427.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230224003404885.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230224003826022.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230224010046517.png">
@@ -40,12 +41,12 @@
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230224151719796.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230224154448010.png">
 <meta property="article:published_time" content="2023-02-23T15:47:17.000Z">
-<meta property="article:modified_time" content="2023-02-24T15:42:42.857Z">
+<meta property="article:modified_time" content="2023-03-11T23:13:53.078Z">
 <meta property="article:author" content="wuhaodong">
 <meta property="article:tag" content="同步">
 <meta property="article:tag" content="锁">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230224003404885.png">
+<meta name="twitter:image" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230309170805427.png">
   
   
   
@@ -259,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          17k 字
+          18k 字
         
       </span>
     
@@ -270,7 +271,7 @@
         
         
         
-          139 分钟
+          150 分钟
         
       </span>
     
@@ -321,7 +322,28 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Synchronized关键字"><a href="#Synchronized关键字" class="headerlink" title="Synchronized关键字"></a>Synchronized关键字</h1><h2 id="Synchronized在字节码中的原理"><a href="#Synchronized在字节码中的原理" class="headerlink" title="Synchronized在字节码中的原理"></a>Synchronized在字节码中的原理</h2><p>在方法上使用synchronized关键字实现同步的原因是使用了flag标记ACC_SYNCHRONIZED，当调用方法时，调用指令将会检查方法的ACC_SYNCHRONIZED访问标志是否设置，如果设置了，执行线程先持有同步锁，然后执行方法，最后在方法完成时释放锁。</p>
+                <h1 id="Synchronized关键字"><a href="#Synchronized关键字" class="headerlink" title="Synchronized关键字"></a>Synchronized关键字</h1><p>synchronized关键字用于为Java对象、方法、代码块提供线程安全的操作。</p>
+<p>synchronized属于独占式的悲观锁，同时属于可重入锁。</p>
+<h2 id="Synchronized在字节码中的原理"><a href="#Synchronized在字节码中的原理" class="headerlink" title="Synchronized在字节码中的原理"></a>Synchronized在字节码中的原理</h2><p>在synchronized内部包括ContentionList、EntryList、WaitSet、OnDeck、Owner、!Owner 6个区域，每个区域都代表锁的不同状态。</p>
+<ul>
+<li>ContentionList：锁竞争队列，所有请求锁的线程都被放在竞争队列中。</li>
+<li>EntryList：竞争候选列表，在Contention List中有资格成为候选者来竞争锁资源的线程被移动到了Entry List中。</li>
+<li>WaitSet：等候集合，在调用wait方法后被阻塞的线程将被放在WaitSet中。</li>
+<li>OnDeck：竞争候选者，在同一时刻最多只有一个线程在竞争锁资源，该线程的状态被称为OnDeck。</li>
+<li>Owner：竞争到锁资源的线程被称为Owner状态线程。</li>
+<li>!Owner：在Owner线程释放锁后，会从Owner的状态变成!Owner。</li>
+</ul>
+<p>synchronized在收到新的锁请求时首先自旋，如果通过自旋也没有获取锁资源，则将被放入锁竞争队列ContentionList中。</p>
+<p>为了防止锁竞争时ContentionList尾部的元素被大量的并发线程进行CAS访问而影响性能，Owner线程会在释放锁资源时将ContentionList中的部分线程移动到EntryList中，并指定EntryList中的某个线程（一般是最先进入的线程）为OnDeck线程。Owner线程并没有直接把锁传递给OnDeck线程，而是把锁竞争的权利交给OnDeck，让OnDeck线程重新竞争锁。在Java中把该行为成为“竞争切换”，该行为牺牲了公平性，但提高了性能。</p>
+<p>获取到锁资源的OnDeck线程会变成为Owner线程，而未获取到锁资源的线程仍然停留在EntryList中。</p>
+<p>Owner线程在被wait方法阻塞后，会被转移到WaitSet队列中，直到某个时刻被notify方法或者notifyAll方法唤醒，会再次进入EntryList中。ContentionList、EntryList、WaitSet中的线程均为阻塞状态，该阻塞是由操作系统来完成的（在Linux内核下是采用pathread_mutex_lock内核函数实现的）。</p>
+<p>Owner线程在执行完毕后会释放锁的资源并变为!Owner状态。</p>
+<img src="/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/image-20230309170805427.png" srcset="/img/loading.gif" lazyload class="" title="image-20230309170805427">
+
+<p>在synchronized中，在线程进入ContentionList之前，等待的线程会先尝试以自旋的方式获取锁，如果获取不到就进入ContentionList，该做法对于已经进入队列的线程是不公平的，因此synchronized是非公平锁。另外，自旋获取锁的线程也可以直接抢占OnDeck线程的锁资源。</p>
+<p>synchronized是一个重量级操作，需要调用操作系统的相关接口，性能较低，给线程加锁的时间有可能超过获取锁后具体逻辑代码的操作时间。</p>
+<p>JDK1.6对synchronized做了很多优化，引入了适应自旋、锁消除、锁粗化、轻量级锁及偏向锁等以提高锁的效率。锁可以从偏向锁升级到轻量级锁，再升级到重量级锁。这种升级过程称为锁膨胀。在JDK1.6中默认开启了偏向锁和轻量级锁，可以通过**-XX:UseBiasedLocking**禁用偏向锁。</p>
+<p>在方法上使用synchronized关键字实现同步的原因是使用了flag标记ACC_SYNCHRONIZED，当调用方法时，调用指令将会检查方法的ACC_SYNCHRONIZED访问标志是否设置，如果设置了，执行线程先持有同步锁，然后执行方法，最后在方法完成时释放锁。</p>
 <h3 id="在方法中使用Synchronized关键字"><a href="#在方法中使用Synchronized关键字" class="headerlink" title="在方法中使用Synchronized关键字"></a>在方法中使用<strong>Synchronized</strong>关键字</h3><p>测试代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SynchronizedStudy</span> &#123;<br>    <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">synMethod</span><span class="hljs-params">()</span>&#123;&#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        synMethod();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -749,6 +771,12 @@
   
 
 
+  
+  
+
+
+
+
 
 
 
@@ -965,6 +993,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/js/leancloud.js" ></script>
 

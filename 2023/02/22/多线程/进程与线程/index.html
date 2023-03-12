@@ -23,14 +23,19 @@
 <meta property="og:site_name" content="氵告 东">
 <meta property="og:description" content="进程与线程进程是程序运行的实例，如运行一个Java程序的实质就是启动一个Java虚拟机进程。进程是程序向操作系统申请资源的基本单位。 线程是进程可执行的最小单位。一个进程可以包含多个线程，一个进程中的所有线程共享该进程中的资源，如内存空间，文件句柄。 Java线程Java标准类库java.lang.Thead就是Java平台对线程的实现。Thread类或其子类的实例就是一个线程。 创建线程运行一个">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303143814315.png">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303144417298.png">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303153333773.png">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303153352249.png">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303154657538.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%B1%82%E7%BA%A7%E5%85%B3%E7%B3%BB.png">
 <meta property="og:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 <meta property="article:published_time" content="2023-02-22T06:33:00.000Z">
-<meta property="article:modified_time" content="2023-02-23T11:48:29.068Z">
+<meta property="article:modified_time" content="2023-03-07T12:07:14.253Z">
 <meta property="article:author" content="wuhaodong">
 <meta property="article:tag" content="线程">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%B1%82%E7%BA%A7%E5%85%B3%E7%B3%BB.png">
+<meta name="twitter:image" content="https://wuhaodonggg.github.io/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303143814315.png">
   
   
   
@@ -244,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.5k 字
         
       </span>
     
@@ -255,7 +260,7 @@
         
         
         
-          19 分钟
+          22 分钟
         
       </span>
     
@@ -310,21 +315,38 @@
 <p>线程是进程可执行的最小单位。一个进程可以包含多个线程，一个进程中的所有线程共享该进程中的资源，如内存空间，文件句柄。</p>
 <h2 id="Java线程"><a href="#Java线程" class="headerlink" title="Java线程"></a>Java线程</h2><p>Java标准类库java.lang.Thead就是Java平台对线程的实现。Thread类或其子类的实例就是一个线程。</p>
 <h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>运行一个线程实际上就是让Java虚拟机执行该线程的run方法，而启动一个线程的方法是Tread类的start方法。启动一个线程的实质是请求Java虚拟机运行相应的线程，而这个线程具体何时能够运行是由线程调度器Scheduler决定的。start方法调用结束并不意味相应线程已经开始运行，这个线程可能稍后才被运行，甚至也可能永远不会被运行。</p>
-<p>Java语言创建线程有两种方式。一种是通过Thread类无参构造器Thread()：定义Thread类的子类，在该子类中覆盖run方法并实现线程处理逻辑；一种是第二个构造器Thread(Runnable targe)：创建一个java.lang.Runnable接口的实例，并且在该实例的run方法实现处理逻辑，然后以该Runnable接口实例作为构造器的参数直接new一个Thread类的实例。</p>
+<p>Java语言创建线程有四种方式。第一种是通过Thread类无参构造器Thread()：定义Thread类的子类，在该子类中覆盖run方法并实现线程处理逻辑；第二种种是第二个构造器Thread(Runnable targe)：创建一个java.lang.Runnable接口的实例，并且在该实例的run方法实现处理逻辑，然后以该Runnable接口实例作为构造器的参数直接new一个Thread类的实例；第三种是通过ExecutorService和Callable<Class>实现有返回值的线程；第四种是基于线程池。</p>
 <blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Thread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Runnable</span><br></code></pre></td></tr></table></figure>
 </blockquote>
 <blockquote>
 <p>Threa类实现了Runnable接口。</p>
 </blockquote>
+<img src="/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303143814315.png" srcset="/img/loading.gif" lazyload class="" title="image-20230303143814315">
+
 <h5 id="第一种："><a href="#第一种：" class="headerlink" title="第一种："></a>第一种：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CreateThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Thread</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>  <span class="hljs-title function_">run</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;这是一个线程！&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">CreateThread</span>().start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>start()方法是一个native方法。</p>
+</blockquote>
 <h5 id="第二种："><a href="#第二种：" class="headerlink" title="第二种："></a>第二种：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CreateThread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Runnable</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span>  <span class="hljs-title function_">run</span><span class="hljs-params">()</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;这是一个线程！&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">CreateThread</span> <span class="hljs-variable">createThread</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CreateThread</span>();<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(createThread,<span class="hljs-string">&quot;线程名称&quot;</span>).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>在实现Runnable的线程实例target作为参数传入Thread后，Thread的run方法在执行时就会调用target.run方法并执行该线程具体的实现逻辑。JDK源码如下</p>
+<img src="/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303144417298.png" srcset="/img/loading.gif" lazyload class="" title="image-20230303144417298">
+
+
+</blockquote>
 <p>一旦现成的run方法执行结束，相应线程的运行也就结束了。并且无法通过重新调用一个已经运行结束的start方法使其重新运行。start方法只能够调用一次，多次调用将抛出异常：IllegalThreadStateException。</p>
-<h5 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h5><p>面向对象角度来说第一种创建方式基于继承；第二种创建方式基于组合，因为组合相对于继承来说耦合性更低，因此一般推荐使用第二种。</p>
-<p>对象共享角度来说：第二种存在线程安全问题。</p>
-<p>创建成本来说：第一种更为昂贵。</p>
+<h5 id="第三种"><a href="#第三种" class="headerlink" title="第三种"></a>第三种</h5><p>通过ExecutorService和Callable<Class>实现有返回值的线程，创建一个类并实现Callable接口，在call方法中实现具体的运算逻辑并返回计算结果。</p>
+<p>具体的调用过程为：创建一个线程池，一个用于接收返回结果的Future List及Callable线程实例，使用线程池提交任务并将线程执行之后的结果保存在Future中，在线程执行结束后遍历Future List中的Future对象，在该对象上调用get方法就可以获取Callable线程任务返回的数据并汇总结果。实现如下：</p>
+<img src="/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303153333773.png" srcset="/img/loading.gif" lazyload class="" title="image-20230303153333773">
+
+<img src="/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303153352249.png" srcset="/img/loading.gif" lazyload class="" title="image-20230303153352249">
+
+<h5 id="第四种"><a href="#第四种" class="headerlink" title="第四种"></a>第四种</h5><p>基于线程池。</p>
+<img src="/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/image-20230303154657538.png" srcset="/img/loading.gif" lazyload class="" title="image-20230303154657538">
+
 <h3 id="线程属性"><a href="#线程属性" class="headerlink" title="线程属性"></a>线程属性</h3><table>
 <thead>
 <tr>
@@ -603,6 +625,12 @@
   
 
 
+  
+  
+
+
+
+
 
 
 
@@ -819,6 +847,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/js/leancloud.js" ></script>
 
