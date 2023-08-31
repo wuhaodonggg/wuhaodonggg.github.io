@@ -1,0 +1,848 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/haodong.jpeg">
+  <link rel="icon" href="/img/haodong.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wuhaodong">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="多线程编程的目标 串行：依次做完每件事。 并发：一个人同时做多件事。 并行：并发的极致，三个人同时做三件事。  线程安全性一个类在单线程环境下运行正常，在多线程环境下也能正常运行，那么称其是线程安全的。 原子性：不可分割。在读、写某个共享变量的操作从其执行线程以外的任何线程来看，该操作要么已经执行结束，要么尚未发生，不能看见其中间效果。  原子操作时针对访问共享变量的操作而言的，局部变量访问无所谓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程编程的目标">
+<meta property="og:url" content="https://wuhaodonggg.github.io/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E7%9A%84%E7%9B%AE%E6%A0%87/index.html">
+<meta property="og:site_name" content="氵告 东">
+<meta property="og:description" content="多线程编程的目标 串行：依次做完每件事。 并发：一个人同时做多件事。 并行：并发的极致，三个人同时做三件事。  线程安全性一个类在单线程环境下运行正常，在多线程环境下也能正常运行，那么称其是线程安全的。 原子性：不可分割。在读、写某个共享变量的操作从其执行线程以外的任何线程来看，该操作要么已经执行结束，要么尚未发生，不能看见其中间效果。  原子操作时针对访问共享变量的操作而言的，局部变量访问无所谓">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-23T01:49:19.000Z">
+<meta property="article:modified_time" content="2023-08-31T14:53:56.917Z">
+<meta property="article:author" content="wuhaodong">
+<meta property="article:tag" content="多线程的安全性">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>多线程编程的目标 - 氵告 东</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/customCss.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"wuhaodonggg.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"vbGqB51mUnImof53RlCtlSVD-MdYXbMMI","app_key":"iFwryqC0JFpwvxRJdZjLZG01","server_url":"https://vbgqb51m.api.lncldglobal.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>氵告 东</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/aodili.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="多线程编程的目标"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-23 09:49" pubdate>
+          2023年2月23日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span>次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">多线程编程的目标</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="多线程编程的目标"><a href="#多线程编程的目标" class="headerlink" title="多线程编程的目标"></a>多线程编程的目标</h1><ul>
+<li>串行：依次做完每件事。</li>
+<li>并发：一个人同时做多件事。</li>
+<li>并行：并发的极致，三个人同时做三件事。</li>
+</ul>
+<h2 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h2><p>一个类在单线程环境下运行正常，在多线程环境下也能正常运行，那么称其是线程安全的。</p>
+<h3 id="原子性："><a href="#原子性：" class="headerlink" title="原子性："></a>原子性：</h3><p>不可分割。在读、写某个共享变量的操作从其执行线程以外的任何线程来看，该操作要么已经执行结束，要么尚未发生，不能看见其中间效果。</p>
+<blockquote>
+<p>原子操作时针对访问共享变量的操作而言的，局部变量访问无所谓是否设计原子操作。</p>
+</blockquote>
+<h4 id="保证方式："><a href="#保证方式：" class="headerlink" title="保证方式："></a>保证方式：</h4><ul>
+<li>使用锁（LOCK）。锁具有排他性，能够保障一个共享变量在任意时刻只能够被一个线程访问，消除竞态。</li>
+<li>利用处理器提供的CAS（compare and Swap）指令，CAS指令实现原子性的方式与锁实现原子性的实质是相同的，差别在于锁通常是在软件层次实现，而CAS是在硬件层次，也被看作“硬件锁”。</li>
+</ul>
+<p>在Java语言中，除long型和double型以外的基础类型变量的写操作都是原子操作，这点由Java语言规范（JTS，Java Languange Specification）规定，由Java虚拟机具体实现。</p>
+<p>在多个线程并发访问同一long&#x2F;double型变量时，可以使用volatile关键字修饰。</p>
+<p>原子操作+原子操作得到的复合操作并不是原子操作。</p>
+<h3 id="可见性："><a href="#可见性：" class="headerlink" title="可见性："></a>可见性：</h3><p>在多线程环境下，一个线程对某个共享变量进行更新之后，后续访问该变量的线程可能无法立刻读取到这个更新的结果，这就是线程的可见性。</p>
+<h4 id="造成原因："><a href="#造成原因：" class="headerlink" title="造成原因："></a>造成原因：</h4><p>程序中变量可能被分配到寄存器，而不是主存中进行存储，两个线程分别运行在不同处理器上，而这两个线程所共享的变量却被分配到寄存器上进行存储，就会产生可见性问题。即便共享变量分配到主存中，也无法保证可见性，因为处理器对主存的访问不是直接的，而是通过高速缓存(Cache)子系统进行的。而一个处理器上运行的线程对变量的更新可能只是更新到写缓存器（Store Buffer）中，还没有到达高速缓冲甚至主存。而另一个处理器的写缓冲器的内容无法被另外一个处理器读取，因此运行在另外一个处理器的线程无法看到这个共享变量的更新。</p>
+<h4 id="保证方式：-1"><a href="#保证方式：-1" class="headerlink" title="保证方式："></a>保证方式：</h4><p>使用volatile关键字，提示JIT编译器被修饰的变量被多个线程共享，阻止JIT编译器做出可能导致程序运行不正常的优化。读取volatile关键字修饰的变量会使相应的处理器执行刷新处理器缓存的动作，从而保障可见性。</p>
+<h3 id="有序性："><a href="#有序性：" class="headerlink" title="有序性："></a>有序性：</h3><p>无论什么情况下一个处理器执行一个线程所执行的内存访问操作在另外一个线程看来都是乱序的，即内存访问操作的顺序看起来像是发生了变化。</p>
+<h4 id="重排序："><a href="#重排序：" class="headerlink" title="重排序："></a>重排序：</h4><p>编译器可能改变两个操作的先后顺序，处理器可能不是完全依照程序的模板代码所指定的顺序执行指令；一个处理器上所执行的多个操作，从其他处理器的角度来看其顺序可能与目标代码所指定的顺序不一致，这种现象叫作重排序。</p>
+<p>重排序是对内存访问有关操作所做的一种优化，可以在不影响单线程程序正确性的情况下提升程序的性能。但是会对多线程的正确性产生影响。</p>
+<h6 id="可能产生来源："><a href="#可能产生来源：" class="headerlink" title="可能产生来源："></a>可能产生来源：</h6><ul>
+<li>源代码顺序：源代码中所指定的内存访问操作顺序。</li>
+<li>程序顺序：在给定处理器上运行的目标代码所指定操作内存的顺序。</li>
+<li>执行顺序：内存访问操作在给定处理器上的实际执行顺序。</li>
+<li>感知顺序：给定处理器所感知到的该处理器及其他处理器内存访问操作发生的顺序。</li>
+</ul>
+<h4 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h4><p>Java平台几乎不会执行指令重排序，在其他编译型语言（如C++）可能会。</p>
+<blockquote>
+<p>Java平台包含两种编译器：静态编译器：javac；动态编译器：JIT编译器。前者是将java源代码.java文件编译成字节码.class文件；后者是将字节码动态编译为Java虚拟机宿主机的本地代码（机器码），它是在Java程序运行过程中介入的。</p>
+</blockquote>
+<h4 id="存储子系统重排序"><a href="#存储子系统重排序" class="headerlink" title="存储子系统重排序"></a>存储子系统重排序</h4><p>处理器不是直接访问主内存，而是通过高速缓存，现代处理器还引入了缓冲器以提高高速缓存操作的效率，我们将写缓冲器和高速缓存统称为存储子系统。</p>
+<p>即使在处理器严格依照程序顺序执行两个内存访问操作的情况下，在存储子系统的作用下其他处理器对这两个操作的感知顺序依然可能与程序顺序不一致，这种现象就是存储子系统重排序，也被称为内存重排序。</p>
+<p>指令重排序的对象是指令，它是对指令的顺序进行调整，而存储子系统重排序是一种现象而不是一种动作，它没有真正对指令顺序进行过调整，而只是造成了一种指令执行顺序像是被调整过一样的现象。</p>
+<h4 id="貌似串行语义"><a href="#貌似串行语义" class="headerlink" title="貌似串行语义"></a>貌似串行语义</h4><p>重排序不是随意对指令、内存操作的结果进行杂乱无章的排序或者顺序调整，而是遵循一定规则。它会从单线程程序的角度保证重排序后的运行结果不会影响程序的正确性，并不能保证多线程环境下程序的正确性。</p>
+<h4 id="保证内存访问的顺序性"><a href="#保证内存访问的顺序性" class="headerlink" title="保证内存访问的顺序性"></a>保证内存访问的顺序性</h4><p>通过禁止重排序是通过调用处理器提供相应的指令（内存屏障）来实现的。可以使用volatile关键字，synchronized关键字来实现。</p>
+<blockquote>
+<p>可见性是有序性的基础。有序性影响可见性。</p>
+</blockquote>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>一个处理器在同时间段内运行多个线程。</p>
+<h3 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h3><p>从Java角度看，一个线程的生命周期状态在RUNNABLE状态与非RUNNABLE状态（包括BLOCKED,WAITING,TIMED和TIMED_WAITING）之间切换的过程就是一个上下文切换的过程。</p>
+<p>一个线程在其运行过程中执行下列任意一个方法都会引起自发性上下文切换</p>
+<ul>
+<li>Threa.sleep(Long millis)</li>
+<li>Obhect.wait()&#x2F;wait(long timeout)&#x2F;wait(long timeout,int nanos)</li>
+<li>Thread.yield()</li>
+<li>Thread.join()&#x2F;Thread.join(long timeout)</li>
+<li>LockSupport.park()</li>
+</ul>
+<p>线程发起I&#x2F;O操作或等待其他线程所持有的锁也会导致自发性上下文切换。</p>
+<h3 id="开销"><a href="#开销" class="headerlink" title="开销"></a>开销</h3><ul>
+<li>时间开销</li>
+<li>线程调度器进行线程调度的开销</li>
+<li>处理器高速缓存重新加载的开销</li>
+<li>上下文切换也可能导致整个一级高速缓存中的内容被冲刷，即一级高速缓存中的内容会被写入下一级高速缓存或主内存中。</li>
+</ul>
+<h3 id="线程的活性故障"><a href="#线程的活性故障" class="headerlink" title="线程的活性故障"></a>线程的活性故障</h3><p>由资源稀缺性或者程序自身的问题和缺陷导致线程一只处于非RUNNABLE状态，或者线程虽然处于RUNNABLE状态但是其要执行的任务却一直无法进展的现象被称为线程活性障碍。</p>
+<p>常见的活性障碍：</p>
+<ul>
+<li>死锁（DeadLock）：”鹬蚌相争“，一个线程X持有资源A的时候等待另一个线程释放资源B，而另外一个线程Y在持有资源B的时候却等待X释放A。</li>
+<li>锁死（Lockout）：睡美人得到王子的亲吻才会苏醒，但是王子挂了。</li>
+<li>活锁（Livelock）：小猫想抓住自己的尾巴，始终无法追到。</li>
+<li>饥饿（Starvation）：母鸟给瘦弱的小鸟喂食，但是每次都被强壮的小鸟抢走，导致瘦弱的鸟饥饿。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="category-chain-item">多线程</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/">#多线程的安全性</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>多线程编程的目标</div>
+      <div>https://wuhaodonggg.github.io/2023/02/23/多线程/多线程编程的目标/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>wuhaodong</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/23/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97/" title="synchronized关键字">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">synchronized关键字</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/22/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" title="进程与线程">
+                        <span class="hidden-mobile">进程与线程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"vbGqB51mUnImof53RlCtlSVD-MdYXbMMI","appKey":"iFwryqC0JFpwvxRJdZjLZG01","path":"window.location.pathname","placeholder":"说点什么...","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://vbgqb51m.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      氵告 东
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+        次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数
+        <span id="leancloud-site-uv"></span>
+        人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
