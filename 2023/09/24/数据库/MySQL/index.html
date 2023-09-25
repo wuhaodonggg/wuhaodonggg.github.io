@@ -1,0 +1,916 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/haodong.jpeg">
+  <link rel="icon" href="/img/haodong.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wuhaodong">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQLMySQL是一种开源的关系型数据库管理系统（RDBMS） MySQL 的逻辑架构了解吗？ 第一层是服务器层，主要提供连接处理、授权认证、安全等功能。 第二层实现了 MySQL 核心服务功能，包括查询解析、分析、优化、缓存以及日期和时间等所有内置函数，所有跨存储引擎的功能都在这一层实现，例如存储过程、触发器、视图等。 第三层是存储引擎层，存储引擎负责 MySQL 中数据的存储和提取。服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL">
+<meta property="og:url" content="https://wuhaodonggg.github.io/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/index.html">
+<meta property="og:site_name" content="氵告 东">
+<meta property="og:description" content="MySQLMySQL是一种开源的关系型数据库管理系统（RDBMS） MySQL 的逻辑架构了解吗？ 第一层是服务器层，主要提供连接处理、授权认证、安全等功能。 第二层实现了 MySQL 核心服务功能，包括查询解析、分析、优化、缓存以及日期和时间等所有内置函数，所有跨存储引擎的功能都在这一层实现，例如存储过程、触发器、视图等。 第三层是存储引擎层，存储引擎负责 MySQL 中数据的存储和提取。服务器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/c929f07ee531f68c08139704001d4ff4.jpg">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/AFE68E8D486A19B26B7D54B76BD8A6DC.jpg">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/30A30663CBD02B937C956934D78D6F63.jpg">
+<meta property="og:image" content="https://wuhaodonggg.github.io/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/924A7088376A35A820369F44E82753E7.jpg">
+<meta property="article:published_time" content="2023-09-23T17:51:28.000Z">
+<meta property="article:modified_time" content="2023-09-25T07:29:05.412Z">
+<meta property="article:author" content="wuhaodong">
+<meta property="article:tag" content="关系型数据库">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://wuhaodonggg.github.io/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/c929f07ee531f68c08139704001d4ff4.jpg">
+  
+  
+  
+  <title>MySQL - 氵告 东</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/customCss.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"wuhaodonggg.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"vbGqB51mUnImof53RlCtlSVD-MdYXbMMI","app_key":"iFwryqC0JFpwvxRJdZjLZG01","server_url":"https://vbgqb51m.api.lncldglobal.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>氵告 东</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/aodili.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MySQL"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-24 01:51" pubdate>
+          2023年9月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          54 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span>次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><p>MySQL是一种开源的关系型数据库管理系统（RDBMS）</p>
+<h2 id="MySQL-的逻辑架构了解吗？"><a href="#MySQL-的逻辑架构了解吗？" class="headerlink" title="MySQL 的逻辑架构了解吗？"></a>MySQL 的逻辑架构了解吗？</h2><ul>
+<li>第一层是服务器层，主要提供连接处理、授权认证、安全等功能。</li>
+<li>第二层实现了 MySQL 核心服务功能，包括查询解析、分析、优化、缓存以及日期和时间等所有内置函数，所有跨存储引擎的功能都在这一层实现，例如存储过程、触发器、视图等。</li>
+<li>第三层是存储引擎层，存储引擎负责 MySQL 中数据的存储和提取。服务器通过 API 与存储引擎通信，这些接口屏蔽了不同存储引擎的差异，使得差异对上层查询过程透明。除了会解析外键定义的 InnoDB 外，存储引擎不会解析 SQL，不同存储引擎之间也不会相互通信，只是简单响应上层服务器请求。</li>
+</ul>
+<img src="/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/c929f07ee531f68c08139704001d4ff4.jpg" srcset="/img/loading.gif" lazyload class="" title="img">
+
+<h2 id="谈一谈-MySQL-的读写锁"><a href="#谈一谈-MySQL-的读写锁" class="headerlink" title="谈一谈 MySQL 的读写锁"></a>谈一谈 MySQL 的读写锁</h2><p>在处理并发读或写时，可以通过实现一个由两种类型组成的锁系统来解决问题。这两种类型的锁通常被称为共享锁和排它锁，也叫读锁和写锁。读锁是共享的，相互不阻塞，多个客户在同一时刻可以同时读取同一个资源而不相互干扰。写锁则是排他的，也就是说一个写锁会阻塞其他的写锁和读锁，确保在给定时间内只有一个用户能执行写入并防止其他用户读取正在写入的同一资源。</p>
+<p>在实际的数据库系统中，每时每刻都在发生锁定，当某个用户在修改某一部分数据时，MySQL 会通过锁定防止其他用户读取同一数据。写锁比读锁有更高的优先级，一个写锁请求可能会被插入到读锁队列的前面，但是读锁不能插入到写锁前面。</p>
+<h2 id="MySQL-的锁策略有什么？"><a href="#MySQL-的锁策略有什么？" class="headerlink" title="MySQL 的锁策略有什么？"></a>MySQL 的锁策略有什么？</h2><p><strong>表锁</strong>是MySQL中最基本的锁策略，并且是开销最小的策略。表锁会锁定整张表，一个用户在对表进行写操作前需要先获得写锁，这会阻塞其他用户对该表的所有读写操作。只有没有写锁时，其他读取的用户才能获取读锁，读锁之间不相互阻塞。</p>
+<p><strong>行锁</strong>可以最大程度地支持并发，同时也带来了最大开销。InnoDB 和 XtraDB 以及一些其他存储引擎实现了行锁。行锁只在存储引擎层实现，而服务器层没有实现。</p>
+<h2 id="数据库死锁如何解决？"><a href="#数据库死锁如何解决？" class="headerlink" title="数据库死锁如何解决？"></a>数据库死锁如何解决？</h2><p>当两个及以上的事务，双方都在等待对方释放已经持有的锁或因为加锁顺序不一致造成循环等待锁资源，就会出现“死锁”。常见的报错信息为 <code>Deadlock found when trying to get lock...</code>。</p>
+<p>举例来说 A 事务持有 X1 锁 ，申请 X2 锁，B事务持有 X2 锁，申请 X1 锁。A 和 B 事务持有锁并且申请对方持有的锁进入循环等待，就造成了死锁。</p>
+<img src="/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/AFE68E8D486A19B26B7D54B76BD8A6DC.jpg" srcset="/img/loading.gif" lazyload class="" title="img">
+
+<p>如上图，是右侧的四辆汽车资源请求产生了回路现象，即死循环，导致了死锁。</p>
+<p>从死锁的定义来看，MySQL 出现死锁的几个要素为：</p>
+<ol>
+<li>两个或者两个以上事务</li>
+<li>每个事务都已经持有锁并且申请新的锁</li>
+<li>锁资源同时只能被同一个事务持有或者不兼容</li>
+<li>事务之间因为持有锁和申请锁导致彼此循环等待</li>
+</ol>
+<h3 id="InnoDB-锁类型"><a href="#InnoDB-锁类型" class="headerlink" title="InnoDB 锁类型"></a>InnoDB 锁类型</h3><p>为了分析死锁，我们有必要对 InnoDB 的锁类型有一个了解。</p>
+<img src="/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/30A30663CBD02B937C956934D78D6F63.jpg" srcset="/img/loading.gif" lazyload class="" title="img">
+
+<p>MySQL InnoDB 引擎实现了标准的<code>行级别锁：共享锁( S lock ) 和排他锁 ( X lock )</code></p>
+<blockquote>
+<ol>
+<li>不同事务可以同时对同一行记录加 S 锁。</li>
+<li>如果一个事务对某一行记录加 X 锁，其他事务就不能加 S 锁或者 X 锁，从而导致锁等待。</li>
+</ol>
+</blockquote>
+<p>如果事务 T1 持有行 r 的 S 锁，那么另一个事务 T2 请求 r 的锁时，会做如下处理:</p>
+<blockquote>
+<ol>
+<li>T2 请求 S 锁立即被允许，结果 T1 T2 都持有 r 行的 S 锁</li>
+<li>T2 请求 X 锁不能被立即允许</li>
+</ol>
+</blockquote>
+<p>如果 T1 持有 r 的 X 锁，那么 T2 请求 r 的 X、S 锁都不能被立即允许，T2 必须等待 T1 释放 X 锁才可以，因为 X 锁与任何的锁都不兼容。共享锁和排他锁的兼容性如下所示：</p>
+<img src="/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/924A7088376A35A820369F44E82753E7.jpg" srcset="/img/loading.gif" lazyload class="" title="img">
+
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ul>
+<li>重试机制（Retry Mechanism）：<ul>
+<li>当检测到死锁时，可以设置一个重试机制，让事务在一段时间后重新尝试执行。这种方法可能会多次重试，直到成功或达到最大尝试次数。</li>
+<li>重试时可以释放已经获取的资源，重新请求锁，以避免死锁再次发生。</li>
+</ul>
+</li>
+<li>超时设置（Timeouts）：<ul>
+<li>可以为每个事务设置一个超时时间，在该时间内如果无法获取所需的锁，事务将被中止。</li>
+<li>超时设置可以防止事务无限期地等待锁，但可能会导致事务被中止，需要谨慎设置超时值。</li>
+</ul>
+</li>
+<li>死锁检测和回滚（Deadlock Detection and Rollback）：<ul>
+<li>数据库系统可以周期性地检测死锁的发生，一旦检测到死锁，系统会选择一个或多个事务进行回滚，以解除死锁。</li>
+<li>通常，系统会选择那些最少影响的事务进行回滚，以最小化数据丢失。</li>
+</ul>
+</li>
+<li>锁粒度调整（Lock Granularity Adjustment）：<ul>
+<li>调整事务中锁的粒度，以减少死锁的可能性。例如，将表级锁改为行级锁，或者反之，根据具体情况来选择最合适的锁粒度。</li>
+</ul>
+</li>
+<li>锁等待图（Lock Wait Graph）：<ul>
+<li>使用锁等待图来分析和监控锁的等待关系，以帮助识别和解决死锁问题。</li>
+<li>一旦发现死锁，可以通过中断一个或多个事务来打破死锁。</li>
+</ul>
+</li>
+<li>事务顺序化（Transaction Serialization）：<ul>
+<li>将一部分并发操作转换成串行执行，以避免死锁。这可能会降低性能，但可以确保数据的一致性。</li>
+</ul>
+</li>
+<li>设计良好的应用程序：<ul>
+<li>在应用程序级别，可以通过设计良好的事务管理和锁定策略来减少死锁的发生。确保事务按照相同的顺序请求锁，可以减少死锁的概率。</li>
+</ul>
+</li>
+</ul>
+<h2 id="事务是什么"><a href="#事务是什么" class="headerlink" title="事务是什么?"></a>事务是什么?</h2><p>事务是一组原子性的 SQL 查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说事务内的语句要么全部执行成功，要么全部执行失败。</p>
+<h2 id="事务有什么特性？"><a href="#事务有什么特性？" class="headerlink" title="事务有什么特性？"></a>事务有什么特性？</h2><h3 id="原子性-atomicity"><a href="#原子性-atomicity" class="headerlink" title="原子性 atomicity"></a><strong>原子性 atomicity</strong></h3><p>一个事务在逻辑上是必须不可分割的最小工作单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说不可能只执行其中的一部分。</p>
+<h3 id="一致性-consistency"><a href="#一致性-consistency" class="headerlink" title="一致性 consistency"></a><strong>一致性 consistency</strong></h3><p>数据库总是从一个一致性的状态转换到另一个一致性的状态。</p>
+<h3 id="隔离性-isolation"><a href="#隔离性-isolation" class="headerlink" title="隔离性 isolation"></a><strong>隔离性 isolation</strong></h3><p>针对并发事务而言，隔离性就是要隔离并发运行的多个事务之间的相互影响，一般来说一个事务所做的修改在最终提交以前，对其他事务是不可见的。</p>
+<h3 id="持久性-durability"><a href="#持久性-durability" class="headerlink" title="持久性 durability"></a><strong>持久性 durability</strong></h3><p>一旦事务提交成功，其修改就会永久保存到数据库中，此时即使系统崩溃，修改的数据也不会丢失。</p>
+<h2 id="MySQL-的隔离级别有哪些？"><a href="#MySQL-的隔离级别有哪些？" class="headerlink" title="MySQL 的隔离级别有哪些？"></a>MySQL 的隔离级别有哪些？</h2><h3 id="未提交读-READ-UNCOMMITTED"><a href="#未提交读-READ-UNCOMMITTED" class="headerlink" title="未提交读 READ UNCOMMITTED"></a><strong>未提交读 READ UNCOMMITTED</strong></h3><p>在该级别事务中的修改即使没有被提交，对其他事务也是可见的。事务可以读取其他事务修改完但未提交的数据，这种问题称为脏读。这个级别还会导致不可重复读和幻读，性能没有比其他级别好很多，很少使用。</p>
+<h3 id="提交读-READ-COMMITTED"><a href="#提交读-READ-COMMITTED" class="headerlink" title="提交读 READ COMMITTED"></a><strong>提交读 READ COMMITTED</strong></h3><p>多数数据库系统默认的隔离级别。提交读满足了隔离性的简单定义：一个事务开始时只能”看见”已经提交的事务所做的修改。换句话说，一个事务从开始直到提交之前的任何修改对其他事务都是不可见的。也叫不可重复读，因为两次执行同样的查询可能会得到不同结果。</p>
+<h3 id="可重复读-REPEATABLE-READ（MySQL默认的隔离级别）"><a href="#可重复读-REPEATABLE-READ（MySQL默认的隔离级别）" class="headerlink" title="可重复读 REPEATABLE READ（MySQL默认的隔离级别）"></a><strong>可重复读 REPEATABLE READ</strong>（MySQL默认的隔离级别）</h3><p>可重复读解决了不可重复读的问题，保证了在同一个事务中多次读取同样的记录结果一致。但还是无法解决幻读，所谓幻读指的是当某个事务在读取某个范围内的记录时，会产生幻行。InnoDB 存储引擎通过多版本并发控制MVCC 解决幻读的问题。</p>
+<h3 id="可串行化-SERIALIZABLE"><a href="#可串行化-SERIALIZABLE" class="headerlink" title="可串行化 SERIALIZABLE"></a><strong>可串行化 SERIALIZABLE</strong></h3><p>最高的隔离级别，通过强制事务串行执行，避免幻读。可串行化会在读取的每一行数据上都加锁，可能导致大量的超时和锁争用的问题。实际应用中很少用到这个隔离级别，只有非常需要确保数据一致性且可以接受没有并发的情况下才考虑该级别。</p>
+<h2 id="MVCC-是什么？"><a href="#MVCC-是什么？" class="headerlink" title="MVCC 是什么？"></a>MVCC 是什么？</h2><p>MVCC 是多版本并发控制，在很多情况下避免加锁，大都实现了非阻塞的读操作，写操作也只锁定必要的行。</p>
+<p>InnoDB 的MVCC 通过在每行记录后面保存两个隐藏的列来实现，这两个列一个保存了行的创建时间，一个保存行的过期时间间。不过存储的不是实际的时间值而是系统版本号，每开始一个新的事务系统版本号都会自动递增，事务开始时刻的系统版本号会作为事务的版本号，用来和查询到的每行记录的版本号进行比较。</p>
+<p>MVCC 只能在 <code>READ COMMITTED</code> 和 <code>REPEATABLE READ</code> 两个隔离级别下工作，因为 <code>READ UNCOMMITTED</code> 总是读取最新的数据行，而不是符合当前事务版本的数据行，而 <code>SERIALIZABLE</code> 则会对所有读取的行都加锁。</p>
+<h2 id="谈一谈-InnoDB"><a href="#谈一谈-InnoDB" class="headerlink" title="谈一谈 InnoDB"></a>谈一谈 InnoDB</h2><p>InnoDB 是 MySQL 的默认事务型引擎，用来处理大量短期事务。InnoDB 的性能和自动崩溃恢复特性使得它在非事务型存储需求中也很流行，除非有特别原因否则应该优先考虑 InnoDB。</p>
+<p>InnoDB 的数据存储在表空间中，表空间由一系列数据文件组成。MySQL4.1 后 InnoDB 可以将每个表的数据和索引放在单独的文件中。</p>
+<p>InnoDB 采用 MVCC 来支持高并发，并且实现了四个标准的隔离级别。其默认级别是 <code>REPEATABLE READ</code>，并通过间隙锁策略防止幻读，间隙锁使 InnoDB 不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定防止幻行的插入。</p>
+<p>InnoDB 表是基于聚簇索引建立的，InnoDB 的索引结构和其他存储引擎有很大不同，聚簇索引对主键查询有很高的性能，不过它的二级索引中必须包含主键列，所以如果主键很大的话其他所有索引都会很大，因此如果表上索引较多的话主键应当尽可能小。</p>
+<p>InnoDB 的存储格式是平立的，可以将数据和索引文件从一个平台复制到另一个平台。</p>
+<p>InnoDB 内部做了很多优化，包括从磁盘读取数据时采用的可预测性预读，能够自动在内存中创建加速读操作的自适应哈希索引，以及能够加速插入操作的插入缓冲区等。</p>
+<h2 id="谈一谈-MyISAM"><a href="#谈一谈-MyISAM" class="headerlink" title="谈一谈 MyISAM"></a>谈一谈 MyISAM</h2><p>MySQL5.1及之前，MyISAM 是默认存储引擎，MyISAM 提供了大量的特性，包括全文索引、压缩、空间函数等，但不支持事务和行锁，最大的缺陷就是崩溃后无法安全恢复。对于只读的数据或者表比较小、可以忍受修复操作的情况仍然可以使用 MyISAM。</p>
+<p>MyISAM 将表存储在数据文件和索引文件中，分别以 <code>.MYD</code> 和 <code>.MYI</code> 作为扩展名。MyISAM 表可以包含动态或者静态行，MySQL 会根据表的定义决定行格式。MyISAM 表可以存储的行记录数一般受限于可用磁盘空间或者操作系统中单个文件的最大尺寸。</p>
+<p>MyISAM 对整张表进行加锁，读取时会对需要读到的所有表加共享锁，写入时则对表加排它锁。但是在表有读取查询的同时，也支持并发往表中插入新的记录。</p>
+<p>对于MyISAM 表，MySQL 可以手动或自动执行检查和修复操作，这里的修复和事务恢复以及崩溃恢复的概念不同。执行表的修复可能导致一些数据丢失，而且修复操作很慢。</p>
+<p>对于 MyISAM 表，即使是 BLOB 和 TEXT 等长字段，也可以基于其前 500 个字符创建索引。MyISAM 也支持全文索引，这是一种基于分词创建的索引，可以支持复杂的查询。</p>
+<p>MyISAM 设计简单，数据以紧密格式存储，所以在某些场景下性能很好。MyISAM 最典型的性能问题还是表锁问题，如果所有的查询长期处于 Locked 状态，那么原因毫无疑问就是表锁。</p>
+<h2 id="谈一谈-Memory"><a href="#谈一谈-Memory" class="headerlink" title="谈一谈 Memory"></a>谈一谈 Memory</h2><p>如果需要快速访问数据且这些数据不会被修改，重启以后丢失也没有关系，那么使用 Memory 表是非常有用的。Memory 表至少要比 MyISAM 表快一个数量级，因为所有数据都保存在内存，不需要磁盘 IO，Memory 表的结构在重启后会保留，但数据会丢失。</p>
+<p>Memory 表适合的场景：查找或者映射表、缓存周期性聚合数据的结果、保存数据分析中产生的中间数据。</p>
+<p>Memory 表支持哈希索引，因此查找速度极快。虽然速度很快但还是无法取代传统的基于磁盘的表，Memory 表使用表级锁，因此并发写入的性能较低。它不支持 BLOB 和 TEXT 类型的列，并且每行的长度是固定的，所以即使指定了 VARCHAR 列，实际存储时也会转换成CHAR，这可能导致部分内存的浪费。</p>
+<p>如果 MySQL 在执行查询的过程中需要使用临时表来保持中间结果，内部使用的临时表就是 Memory 表。如果中间结果太大超出了Memory 表的限制，或者含有 BLOB 或 TEXT 字段，临时表会转换成 MyISAM 表。</p>
+<h2 id="查询执行流程是什么？"><a href="#查询执行流程是什么？" class="headerlink" title="查询执行流程是什么？"></a>查询执行流程是什么？</h2><p>简单来说分为五步：</p>
+<ul>
+<li>① 客户端发送一条查询给服务器。</li>
+<li>② 服务器先检查查询缓存，如果命中了缓存则立刻返回存储在缓存中的结果，否则进入下一阶段。</li>
+<li>③ 服务器端进行 SQL 解析、预处理，再由优化器生成对应的执行计划。</li>
+<li>④ MySQL 根据优化器生成的执行计划，调用存储引擎的 API 来执行查询。</li>
+<li>⑤ 将结果返回给客户端。</li>
+</ul>
+<h2 id="VARCHAR-和-CHAR-的区别？"><a href="#VARCHAR-和-CHAR-的区别？" class="headerlink" title="VARCHAR 和 CHAR 的区别？"></a>VARCHAR 和 CHAR 的区别？</h2><p><strong>VARCHAR</strong> 用于存储可变字符串，是最常见的字符串数据类型。它比 CHAR 更节省空间，因为它仅使用必要的空间。VARCHAR 需要 1 或 2 个额外字节记录字符串长度，如果列的最大长度不大于 255 字节则只需要 1 字节。VARCHAR 不会删除末尾空格。</p>
+<p>VARCHAR 适用场景：字符串列的最大长度比平均长度大很多、列的更新很少、使用了 UTF8 这种复杂字符集，每个字符都使用不同的字节数存储。</p>
+<p><strong>CHAR</strong> 是定长的，根据定义的字符串长度分配足够的空间。CHAR 会删除末尾空格。</p>
+<p>CHAR 适合存储很短的字符串，或所有值都接近同一个长度，例如存储密码的 MD5 值。对于经常变更的数据，CHAR 也比 VARCHAR更好，因为定长的 CHAR 不容易产生碎片。对于非常短的列，CHAR 在存储空间上也更有效率，例如用 CHAR 来存储只有 Y 和 N 的值只需要一个字节，但是 VARCHAR 需要两个字节，因为还有一个记录长度的额外字节。</p>
+<h2 id="DATETIME-和-TIMESTAMP-的区别？"><a href="#DATETIME-和-TIMESTAMP-的区别？" class="headerlink" title="DATETIME 和 TIMESTAMP 的区别？"></a>DATETIME 和 TIMESTAMP 的区别？</h2><p><strong>DATETIME</strong> 能保存大范围的值，从 1001~9999 年，精度为秒。把日期和时间封装到了一个整数中，与时区无关，使用 8 字节存储空间。</p>
+<p><strong>TIMESTAMP</strong> 和 UNIX 时间戳相同，只使用 4 字节的存储空间，范围比 DATETIME 小得多，只能表示 1970 ~2038 年，并且依赖于时区。</p>
+<h2 id="索引有什么作用？"><a href="#索引有什么作用？" class="headerlink" title="索引有什么作用？"></a>索引有什么作用？</h2><p>索引也叫键，是存储引擎用于快速找到记录的一种数据结构。索引对于良好的性能很关键，尤其是当表中数据量越来越大时，索引对性能的影响愈发重要。在数据量较小且负载较低时，不恰当的索引对性能的影响可能还不明显，但数据量逐渐增大时，性能会急剧下降。</p>
+<p>索引大大减少了服务器需要扫描的数据量、可以帮助服务器避免排序和临时表、可以将随机 IO 变成顺序 IO。但索引并不总是最好的工具，对于非常小的表，大部分情况下会采用全表扫描。对于中到大型的表，索引就非常有效。但对于特大型的表，建立和使用索引的代价也随之增长，这种情况下应该使用分区技术。</p>
+<p>在MySQL中，首先在索引中找到对应的值，然后根据匹配的索引记录找到对应的数据行。索引可以包括一个或多个列的值，如果索引包含多个列，那么列的顺序也十分重要，因为 MySQL 只能使用索引的最左前缀。</p>
+<h2 id="索引失效的情况有哪些？"><a href="#索引失效的情况有哪些？" class="headerlink" title="索引失效的情况有哪些？"></a>索引失效的情况有哪些？</h2><ol>
+<li><strong>使用不等于操作符（!&#x3D;）</strong>：在MySQL中，不等于操作符（!&#x3D;）或非等于操作符（&lt;&gt;）会使索引失效。</li>
+<li><strong>使用LIKE操作符</strong>：在LIKE操作符的查询条件中，如果使用了通配符（%）以外的其他字符，MySQL将无法使用索引。</li>
+<li><strong>使用OR操作符</strong>：在WHERE子句中，如果使用了OR操作符连接多个条件，且这些条件中的列没有形成联合索引，那么索引将可能失效。</li>
+<li><strong>使用函数或表达式</strong>：在查询中，如果对索引列使用了函数或表达式，那么MySQL将无法使用该列的索引。</li>
+<li><strong>数据类型不一致</strong>：如果查询中的数据类型与表中的数据类型不一致，可能会导致索引失效。</li>
+<li><strong>NULL值</strong>：如果索引列包含NULL值，并且查询没有明确处理NULL值，那么索引可能不会正常工作。</li>
+<li><strong>索引碎片过多</strong>：如果数据库中的数据发生了大量的增删改操作，可能会导致索引碎片过多，这可能会影响查询性能，甚至可能导致索引失效。</li>
+<li><strong>查询优化器的选择</strong>：有时候，即使索引可用，MySQL的查询优化器可能会根据其判断选择全表扫描而非使用索引。</li>
+<li><strong>未及时更新索引</strong>：在并发插入、更新、删除操作的场景下，可能会出现刚更新的数据未及时更新到索引中的情况。</li>
+<li><strong>锁竞争和并发控制</strong>：在高并发的场景下，如果对索引的锁竞争过大，可能会导致索引的并发控制能力下降，进而影响查询性能。</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93/">#关系型数据库</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL</div>
+      <div>https://wuhaodonggg.github.io/2023/09/24/数据库/MySQL/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>wuhaodong</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" title="策略模式">
+                        <span class="hidden-mobile">策略模式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"vbGqB51mUnImof53RlCtlSVD-MdYXbMMI","appKey":"iFwryqC0JFpwvxRJdZjLZG01","path":"window.location.pathname","placeholder":"说点什么...","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://vbgqb51m.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      氵告 东
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+        次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数
+        <span id="leancloud-site-uv"></span>
+        人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
