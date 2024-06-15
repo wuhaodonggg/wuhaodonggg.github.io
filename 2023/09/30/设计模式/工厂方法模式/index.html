@@ -1,0 +1,406 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>工厂方法模式 | 浩东's Blog.</title><meta name="author" content="hodong"><meta name="copyright" content="hodong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="工厂方法模式 工厂模式又称工厂方法模式，是一种创建型设计模式，其在父类中提供一个创建对象的方法， 允许子类决定实例化对象的类型。这种设计模式也是Java 开发中最常见的一种模式，它的主要意图是定义一个创建对象的接口，让其子类自己决定实例化哪一个工厂类，工厂模式使其创建过程延迟到子类进行。简单说就是为了提供代码结构的扩展性，屏蔽每一个功能类中的具体实现逻辑。让外部可以更加简单的只是知道调用即可，同时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工厂方法模式">
+<meta property="og:url" content="https://wuhaodonggg.github.io/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="浩东&#39;s Blog.">
+<meta property="og:description" content="工厂方法模式 工厂模式又称工厂方法模式，是一种创建型设计模式，其在父类中提供一个创建对象的方法， 允许子类决定实例化对象的类型。这种设计模式也是Java 开发中最常见的一种模式，它的主要意图是定义一个创建对象的接口，让其子类自己决定实例化哪一个工厂类，工厂模式使其创建过程延迟到子类进行。简单说就是为了提供代码结构的扩展性，屏蔽每一个功能类中的具体实现逻辑。让外部可以更加简单的只是知道调用即可，同时">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wuhaodonggg.github.io/img/post/image-20240613022224355-17182165461451.png">
+<meta property="article:published_time" content="2023-09-30T13:32:09.000Z">
+<meta property="article:modified_time" content="2024-06-14T07:54:55.553Z">
+<meta property="article:author" content="hodong">
+<meta property="article:tag" content="工厂方法模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wuhaodonggg.github.io/img/post/image-20240613022224355-17182165461451.png"><link rel="shortcut icon" href="/image/real.jpg"><link rel="canonical" href="https://wuhaodonggg.github.io/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?94cec982d391cae7b885402064cbd423";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: hodong","link":"链接: ","source":"来源: 浩东's Blog.","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '工厂方法模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-14 15:54:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/myStyle.css"><link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/real.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/../img/post/image-20240613022224355-17182165461451.png')"><nav id="nav"><span id="blog-info"><a href="/" title="浩东's Blog."><span class="site-name">浩东's Blog.</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">工厂方法模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-30T13:32:09.000Z" title="发表于 2023-09-30 21:32:09">2023-09-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-06-14T07:54:55.553Z" title="更新于 2024-06-14 15:54:55">2024-06-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="工厂方法模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h1><p><img src="/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/image-20240613022224355-17183516955331.png" alt="image-20240613022224355"></p>
+<p>工厂模式又称工厂方法模式，是一种创建型设计模式，其在父类中提供一个创建对象的方法， 允许子类决定实例化对象的类型。<br>这种设计模式也是Java 开发中最常见的一种模式，它的主要意图是定义一个创建对象的接口，让其子类自己决定实例化哪一个工厂类，工厂模式使其创建过程延迟到子类进行。<br>简单说就是为了提供代码结构的扩展性，屏蔽每一个功能类中的具体实现逻辑。让外部可以更加简单的只是知道调用即可，同时，这也是去掉众多 if-else 的方式。当然这可能也有一些缺点，比如需要实现的类非常多，如何去维护，怎样减低开发成本。但这些问题都可以在后续的设计模式结合使用中，逐步降低。</p>
+<p>在工厂方法模式中，通常有四个角色：</p>
+<ol>
+<li>Product（抽象产品类）：定义了产品的接口，声明了产品的方法和属性。</li>
+<li>ConcreteProduct（具体产品类）：实现了Product接口，提供了具体的产品实现。</li>
+<li>Factory（抽象工厂类）：定义了创建产品的接口，声明了工厂方法。</li>
+<li>ConcreteFactory（具体工厂类）：实现了Factory接口，提供了具体的工厂实现，负责创建具体的产品对象。</li>
+</ol>
+<p>工厂方法模式的优点：</p>
+<ul>
+<li>松耦合：客户端代码只需要依赖抽象工厂和抽象产品，不需要知道具体的实现类。</li>
+<li>高扩展性：可以轻松地添加新的产品或工厂实现， 无需修改客户端代码。</li>
+<li>更好的代码重用：可以在不同的应用场景中重用工厂和产品的实现。</li>
+</ul>
+<p><img src="/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/image-20240612234820529-17182073016541.png" alt="image-20240612234820529"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>类型</th>
+<th>接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>优惠券</td>
+<td>CouponResult sendCoupon(String uId, StringcouponNumber, String uuid)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>实物商品</td>
+<td>Boolean deliverGoods(DeliverReq req)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>第三方爱奇艺兑换卡</td>
+<td>void grantToken(String bindMobileNumber, String cardId)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>从以上接口来看有如下信息：</p>
+<ul>
+<li>三个接口返回类型不同，有对象类型、布尔类型、还有一个空类型。</li>
+<li>入参不同，发放优惠券需要仿重、兑换卡需要卡ID、实物商品需要发货位置(对象中含有)。</li>
+<li>另外可能会随着后续的业务的发展，会新增其他种商品类型。因为你所有的开发需求都是随着业务对市场的拓展而带来的。</li>
+</ul>
+<h2 id="if-else实现需求"><a href="#if-else实现需求" class="headerlink" title="if-else实现需求"></a>if-else实现需求</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PrizeController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(PrizeController.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> AwardRes <span class="title function_">awardToUser</span><span class="params">(AwardReq req)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">reqJson</span> <span class="operator">=</span> JSON.toJSONString(req);</span><br><span class="line">        <span class="type">AwardRes</span> <span class="variable">awardRes</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;奖品发放开始&#123;&#125;。req:&#123;&#125;&quot;</span>, req.getuId(), reqJson);</span><br><span class="line">            <span class="comment">// 按照不同类型方法商品[1优惠券、2实物商品、3第三方兑换卡(爱奇艺)]</span></span><br><span class="line">            <span class="keyword">if</span> (req.getAwardType() == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="type">CouponService</span> <span class="variable">couponService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CouponService</span>();</span><br><span class="line">                <span class="type">CouponResult</span> <span class="variable">couponResult</span> <span class="operator">=</span> couponService.sendCoupon(req.getuId(), req.getAwardNumber(), req.getBizId());</span><br><span class="line">                <span class="keyword">if</span> (<span class="string">&quot;0000&quot;</span>.equals(couponResult.getCode())) &#123;</span><br><span class="line">                    awardRes = <span class="keyword">new</span> <span class="title class_">AwardRes</span>(<span class="string">&quot;0000&quot;</span>, <span class="string">&quot;发放成功&quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    awardRes = <span class="keyword">new</span> <span class="title class_">AwardRes</span>(<span class="string">&quot;0001&quot;</span>, couponResult.getInfo());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.getAwardType() == <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="type">GoodsService</span> <span class="variable">goodsService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GoodsService</span>();</span><br><span class="line">                <span class="type">DeliverReq</span> <span class="variable">deliverReq</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DeliverReq</span>();</span><br><span class="line">                deliverReq.setUserName(queryUserName(req.getuId()));</span><br><span class="line">                deliverReq.setUserPhone(queryUserPhoneNumber(req.getuId()));</span><br><span class="line">                deliverReq.setSku(req.getAwardNumber());</span><br><span class="line">                deliverReq.setOrderId(req.getBizId());</span><br><span class="line">                deliverReq.setConsigneeUserName(req.getExtMap().get(<span class="string">&quot;consigneeUserName&quot;</span>));</span><br><span class="line">                deliverReq.setConsigneeUserPhone(req.getExtMap().get(<span class="string">&quot;consigneeUserPhone&quot;</span>));</span><br><span class="line">                deliverReq.setConsigneeUserAddress(req.getExtMap().get(<span class="string">&quot;consigneeUserAddress&quot;</span>));</span><br><span class="line">                <span class="type">Boolean</span> <span class="variable">isSuccess</span> <span class="operator">=</span> goodsService.deliverGoods(deliverReq);</span><br><span class="line">                <span class="keyword">if</span> (isSuccess) &#123;</span><br><span class="line">                    awardRes = <span class="keyword">new</span> <span class="title class_">AwardRes</span>(<span class="string">&quot;0000&quot;</span>, <span class="string">&quot;发放成功&quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    awardRes = <span class="keyword">new</span> <span class="title class_">AwardRes</span>(<span class="string">&quot;0001&quot;</span>, <span class="string">&quot;发放失败&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.getAwardType() == <span class="number">3</span>) &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">bindMobileNumber</span> <span class="operator">=</span> queryUserPhoneNumber(req.getuId());</span><br><span class="line">                <span class="type">IQiYiCardService</span> <span class="variable">iQiYiCardService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IQiYiCardService</span>();</span><br><span class="line">                iQiYiCardService.grantToken(bindMobileNumber, req.getAwardNumber());</span><br><span class="line">                awardRes = <span class="keyword">new</span> <span class="title class_">AwardRes</span>(<span class="string">&quot;0000&quot;</span>, <span class="string">&quot;发放成功&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            logger.info(<span class="string">&quot;奖品发放完成&#123;&#125;。&quot;</span>, req.getuId());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;奖品发放失败&#123;&#125;。req:&#123;&#125;&quot;</span>, req.getuId(), reqJson, e);</span><br><span class="line">            awardRes = <span class="keyword">new</span> <span class="title class_">AwardRes</span>(<span class="string">&quot;0001&quot;</span>, e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> awardRes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">queryUserName</span><span class="params">(String uId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;浩东&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">queryUserPhoneNumber</span><span class="params">(String uId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;13000001221&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>if-else实现出来的代码目前不会有问题，但经过几次迭代后，研发将变得十分痛苦。重构成本高需要理清之前每一个接口的使用，测试回归验证时间长。</p>
+<h2 id="工厂模式优化代码"><a href="#工厂模式优化代码" class="headerlink" title="工厂模式优化代码"></a>工厂模式优化代码</h2><p>接下来使用工厂方法模式来进行代码优化，也算是一次很小的重构。整理重构会你会发现代码结构清晰了、也具备了下次新增业务需求的扩展性。但在实际使用中还会对此进行完善，目前的只是抽离出最核心的部分体现到你面前，方便学习。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="定义发奖接口"><a href="#定义发奖接口" class="headerlink" title="定义发奖接口"></a>定义发奖接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ICommodity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">sendCommodity</span><span class="params">(String uId, String commodityId, String bizId, Map&lt;String, String&gt; extMap)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>所有的奖品无论是实物、虚拟还是第三方，都需要通过我们的程序实现此接口进行处理，以保证最终入参出参的统一性。</li>
+<li>接口的入参包括;用户ID、奖品ID 、业务ID 以及 扩展字段 用于处理发放实物商品时的收获地址。</li>
+</ul>
+<h4 id="实现奖品发放接口"><a href="#实现奖品发放接口" class="headerlink" title="实现奖品发放接口"></a>实现奖品发放接口</h4><h5 id="优惠券"><a href="#优惠券" class="headerlink" title="优惠券"></a>优惠券</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CouponCommodityService</span> <span class="keyword">implements</span> <span class="title class_">ICommodity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(CouponCommodityService.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">CouponService</span> <span class="variable">couponService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CouponService</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendCommodity</span><span class="params">(String uId, String commodityId, String bizId, Map&lt;String, String&gt; extMap)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">CouponResult</span> <span class="variable">couponResult</span> <span class="operator">=</span> couponService.sendCoupon(uId, commodityId, bizId);</span><br><span class="line">        logger.info(<span class="string">&quot;请求参数[优惠券] =&gt; uId：&#123;&#125; commodityId：&#123;&#125; bizId：&#123;&#125; extMap：&#123;&#125;&quot;</span>, uId, commodityId, bizId, JSON.toJSON(extMap));</span><br><span class="line">        logger.info(<span class="string">&quot;测试结果[优惠券]：&#123;&#125;&quot;</span>, JSON.toJSON(couponResult));</span><br><span class="line">        <span class="keyword">if</span> (!<span class="string">&quot;0000&quot;</span>.equals(couponResult.getCode())) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(couponResult.getInfo());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="实物商品"><a href="#实物商品" class="headerlink" title="实物商品"></a>实物商品</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GoodsCommodityService</span> <span class="keyword">implements</span> <span class="title class_">ICommodity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(GoodsCommodityService.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">GoodsService</span> <span class="variable">goodsService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GoodsService</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendCommodity</span><span class="params">(String uId, String commodityId, String bizId, Map&lt;String, String&gt; extMap)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">DeliverReq</span> <span class="variable">deliverReq</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DeliverReq</span>();</span><br><span class="line">        deliverReq.setUserName(queryUserName(uId));</span><br><span class="line">        deliverReq.setUserPhone(queryUserPhoneNumber(uId));</span><br><span class="line">        deliverReq.setSku(commodityId);</span><br><span class="line">        deliverReq.setOrderId(bizId);</span><br><span class="line">        deliverReq.setConsigneeUserName(extMap.get(<span class="string">&quot;consigneeUserName&quot;</span>));</span><br><span class="line">        deliverReq.setConsigneeUserPhone(extMap.get(<span class="string">&quot;consigneeUserPhone&quot;</span>));</span><br><span class="line">        deliverReq.setConsigneeUserAddress(extMap.get(<span class="string">&quot;consigneeUserAddress&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="type">Boolean</span> <span class="variable">isSuccess</span> <span class="operator">=</span> goodsService.deliverGoods(deliverReq);</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="string">&quot;请求参数[优惠券] =&gt; uId：&#123;&#125; commodityId：&#123;&#125; bizId：&#123;&#125; extMap：&#123;&#125;&quot;</span>, uId, commodityId, bizId, JSON.toJSON(extMap));</span><br><span class="line">        logger.info(<span class="string">&quot;测试结果[优惠券]：&#123;&#125;&quot;</span>, isSuccess);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!isSuccess) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;实物商品发放失败&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">queryUserName</span><span class="params">(String uId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;浩东&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">queryUserPhoneNumber</span><span class="params">(String uId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;13000001221&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="第三方兑换卡"><a href="#第三方兑换卡" class="headerlink" title="第三方兑换卡"></a>第三方兑换卡</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CardCommodityService</span> <span class="keyword">implements</span> <span class="title class_">ICommodity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(CardCommodityService.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟注入</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">IQiYiCardService</span> <span class="variable">iQiYiCardService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IQiYiCardService</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendCommodity</span><span class="params">(String uId, String commodityId, String bizId, Map&lt;String, String&gt; extMap)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">mobile</span> <span class="operator">=</span> queryUserMobile(uId);</span><br><span class="line">        iQiYiCardService.grantToken(mobile, bizId);</span><br><span class="line">        logger.info(<span class="string">&quot;请求参数[爱奇艺兑换卡] =&gt; uId：&#123;&#125; commodityId：&#123;&#125; bizId：&#123;&#125; extMap：&#123;&#125;&quot;</span>, uId, commodityId, bizId, JSON.toJSON(extMap));</span><br><span class="line">        logger.info(<span class="string">&quot;测试结果[爱奇艺兑换卡]：success&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">queryUserMobile</span><span class="params">(String uId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;15200101232&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>从上面可以看到每一种奖品的实现都包括在自己的类中，新增、修改或者删除都不会影响其他奖品功能的测试，降低回归测试的可能。</li>
+<li>后续在新增的奖品只需要按照此结构进行填充即可，非常易于维护和扩展。</li>
+<li>在统一了入参以及出参后，调用方不在需要关心奖品发放的内部逻辑，按照统一的方式即可处理。</li>
+</ul>
+<h4 id="创建商店工厂"><a href="#创建商店工厂" class="headerlink" title="创建商店工厂"></a>创建商店工厂</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StoreFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ICommodity <span class="title function_">getCommodityService</span><span class="params">(Integer commodityType)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> == commodityType) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="number">1</span> == commodityType) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CouponCommodityService</span>();</span><br><span class="line">        <span class="keyword">if</span> (<span class="number">2</span> == commodityType) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">GoodsCommodityService</span>();</span><br><span class="line">        <span class="keyword">if</span> (<span class="number">3</span> == commodityType) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CardCommodityService</span>();</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;不存在的商品服务类型&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里我们定义了一个商店的工厂类，在里面按照类型实现各种商品的服务。可以非常干净整洁的处理你的代码，后续新增的商品在这里扩展即可。如果你不喜欢 if 判断，也可以使用 switch 或者 map 配置结构，会让代码更加干净。</li>
+<li>另外很多代码检查软件和编码要求，不喜欢if语句后面不写扩展，这里是为了更加干净的向你体现逻辑。在实际的业务编码中可以添加括号。</li>
+</ul>
+<h4 id="编写测试类"><a href="#编写测试类" class="headerlink" title="编写测试类"></a>编写测试类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ApiTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test_commodity</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">StoreFactory</span> <span class="variable">storeFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StoreFactory</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 优惠券</span></span><br><span class="line">        <span class="type">ICommodity</span> <span class="variable">commodityService_1</span> <span class="operator">=</span> storeFactory.getCommodityService(<span class="number">1</span>);</span><br><span class="line">        commodityService_1.sendCommodity(<span class="string">&quot;10001&quot;</span>, <span class="string">&quot;EGM1023938910232121323432&quot;</span>, <span class="string">&quot;791098764902132&quot;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 实物商品</span></span><br><span class="line">        <span class="type">ICommodity</span> <span class="variable">commodityService_2</span> <span class="operator">=</span> storeFactory.getCommodityService(<span class="number">2</span>);</span><br><span class="line">        Map&lt;String,String&gt; extMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,String&gt;();</span><br><span class="line">        extMap.put(<span class="string">&quot;consigneeUserName&quot;</span>, <span class="string">&quot;谢飞机&quot;</span>);</span><br><span class="line">        extMap.put(<span class="string">&quot;consigneeUserPhone&quot;</span>, <span class="string">&quot;15200292123&quot;</span>);</span><br><span class="line">        extMap.put(<span class="string">&quot;consigneeUserAddress&quot;</span>, <span class="string">&quot;吉林省.长春市.双阳区.XX街道.檀溪苑小区.#18-2109&quot;</span>);</span><br><span class="line"></span><br><span class="line">        commodityService_2.sendCommodity(<span class="string">&quot;10001&quot;</span>,<span class="string">&quot;9820198721311&quot;</span>,<span class="string">&quot;1023000020112221113&quot;</span>,<span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, String&gt;() &#123;&#123;</span><br><span class="line">            put(<span class="string">&quot;consigneeUserName&quot;</span>, <span class="string">&quot;谢飞机&quot;</span>);</span><br><span class="line">            put(<span class="string">&quot;consigneeUserPhone&quot;</span>, <span class="string">&quot;15200292123&quot;</span>);</span><br><span class="line">            put(<span class="string">&quot;consigneeUserAddress&quot;</span>, <span class="string">&quot;吉林省.长春市.双阳区.XX街道.檀溪苑小区.#18-2109&quot;</span>);</span><br><span class="line">        &#125;&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 第三方兑换卡(爱奇艺)</span></span><br><span class="line">        <span class="type">ICommodity</span> <span class="variable">commodityService_3</span> <span class="operator">=</span> storeFactory.getCommodityService(<span class="number">3</span>);</span><br><span class="line">        commodityService_3.sendCommodity(<span class="string">&quot;10001&quot;</span>,<span class="string">&quot;AQY1xjkUodl8LO975GdfrYUio&quot;</span>,<span class="literal">null</span>,<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">模拟发放优惠券一张：<span class="number">10001</span><span class="punctuation">,</span>EGM1023938910232121323432<span class="punctuation">,</span><span class="number">791098764902132</span></span><br><span class="line"><span class="number">2024</span><span class="number">-06</span><span class="number">-13</span> <span class="number">00</span><span class="punctuation">:</span><span class="number">44</span><span class="punctuation">:</span><span class="number">43.751</span>	INFO	main		(CouponCommodityService.java<span class="punctuation">:</span><span class="number">20</span>)	|	请求参数<span class="punctuation">[</span>优惠券<span class="punctuation">]</span> =&gt; uId：<span class="number">10001</span> commodityId：EGM1023938910232121323432 bizId：<span class="number">791098764902132</span> extMap：<span class="literal"><span class="keyword">null</span></span></span><br><span class="line"><span class="number">2024</span><span class="number">-06</span><span class="number">-13</span> <span class="number">00</span><span class="punctuation">:</span><span class="number">44</span><span class="punctuation">:</span><span class="number">43.782</span>	INFO	main		(CouponCommodityService.java<span class="punctuation">:</span><span class="number">21</span>)	|	测试结果<span class="punctuation">[</span>优惠券<span class="punctuation">]</span>：<span class="punctuation">&#123;</span><span class="attr">&quot;code&quot;</span><span class="punctuation">:</span><span class="string">&quot;0000&quot;</span><span class="punctuation">,</span><span class="attr">&quot;info&quot;</span><span class="punctuation">:</span><span class="string">&quot;发放成功&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">模拟发货实物商品一个：<span class="punctuation">&#123;</span><span class="attr">&quot;consigneeUserAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;吉林省.长春市.双阳区.XX街道.檀溪苑小区.#18-2109&quot;</span><span class="punctuation">,</span><span class="attr">&quot;consigneeUserName&quot;</span><span class="punctuation">:</span><span class="string">&quot;谢飞机&quot;</span><span class="punctuation">,</span><span class="attr">&quot;consigneeUserPhone&quot;</span><span class="punctuation">:</span><span class="string">&quot;15200292123&quot;</span><span class="punctuation">,</span><span class="attr">&quot;orderId&quot;</span><span class="punctuation">:</span><span class="string">&quot;1023000020112221113&quot;</span><span class="punctuation">,</span><span class="attr">&quot;sku&quot;</span><span class="punctuation">:</span><span class="string">&quot;9820198721311&quot;</span><span class="punctuation">,</span><span class="attr">&quot;userName&quot;</span><span class="punctuation">:</span><span class="string">&quot;花花&quot;</span><span class="punctuation">,</span><span class="attr">&quot;userPhone&quot;</span><span class="punctuation">:</span><span class="string">&quot;15200101232&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="number">2024</span><span class="number">-06</span><span class="number">-13</span> <span class="number">00</span><span class="punctuation">:</span><span class="number">44</span><span class="punctuation">:</span><span class="number">43.782</span>	INFO	main		(GoodsCommodityService.java<span class="punctuation">:</span><span class="number">30</span>)	|	请求参数<span class="punctuation">[</span>优惠券<span class="punctuation">]</span> =&gt; uId：<span class="number">10001</span> commodityId：<span class="number">9820198721311</span> bizId：<span class="number">1023000020112221113</span> extMap：<span class="punctuation">&#123;</span><span class="attr">&quot;consigneeUserName&quot;</span><span class="punctuation">:</span><span class="string">&quot;谢飞机&quot;</span><span class="punctuation">,</span><span class="attr">&quot;consigneeUserAddress&quot;</span><span class="punctuation">:</span><span class="string">&quot;吉林省.长春市.双阳区.XX街道.檀溪苑小区.#18-2109&quot;</span><span class="punctuation">,</span><span class="attr">&quot;consigneeUserPhone&quot;</span><span class="punctuation">:</span><span class="string">&quot;15200292123&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="number">2024</span><span class="number">-06</span><span class="number">-13</span> <span class="number">00</span><span class="punctuation">:</span><span class="number">44</span><span class="punctuation">:</span><span class="number">43.782</span>	INFO	main		(GoodsCommodityService.java<span class="punctuation">:</span><span class="number">31</span>)	|	测试结果<span class="punctuation">[</span>优惠券<span class="punctuation">]</span>：<span class="literal"><span class="keyword">true</span></span></span><br><span class="line">模拟发放爱奇艺会员卡一张：<span class="number">15200101232</span>，<span class="literal"><span class="keyword">null</span></span></span><br><span class="line"><span class="number">2024</span><span class="number">-06</span><span class="number">-13</span> <span class="number">00</span><span class="punctuation">:</span><span class="number">44</span><span class="punctuation">:</span><span class="number">43.782</span>	INFO	main		(CardCommodityService.java<span class="punctuation">:</span><span class="number">21</span>)	|	请求参数<span class="punctuation">[</span>爱奇艺兑换卡<span class="punctuation">]</span> =&gt; uId：<span class="number">10001</span> commodityId：AQY1xjkUodl8LO975GdfrYUio bizId：<span class="literal"><span class="keyword">null</span></span> extMap：<span class="literal"><span class="keyword">null</span></span></span><br><span class="line"><span class="number">2024</span><span class="number">-06</span><span class="number">-13</span> <span class="number">00</span><span class="punctuation">:</span><span class="number">44</span><span class="punctuation">:</span><span class="number">43.782</span>	INFO	main		(CardCommodityService.java<span class="punctuation">:</span><span class="number">22</span>)	|	测试结果<span class="punctuation">[</span>爱奇艺兑换卡<span class="punctuation">]</span>：success</span><br><span class="line"></span><br><span class="line">进程已结束，退出代码为 <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>从上到下的优化来看，工厂方法模式并不复杂，甚至这样的开发结构在你有所理解后，会发现更加简单了。</li>
+<li>那么这样的开发的好处知道后，也可以总结出来它的优点; 避免创建者与具体的产品逻辑耦合 、 满足单一职责，每一个业务逻辑实现都在所属自己的类中完成 、 满足开闭原则，无需更改使用调用方就可以在程序中引入新的产品类型。但这样也会带来一些问题，比如有非常多的奖品类型，那么实现的子类会极速扩张。因此也需要使用其他的模式进行优化，这些在后续的设计模式中会逐步涉及到。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://wuhaodonggg.github.io">hodong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://wuhaodonggg.github.io/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">https://wuhaodonggg.github.io/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://wuhaodonggg.github.io" target="_blank">浩东's Blog.</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">工厂方法模式</a></div><div class="post_share"><div class="social-share" data-image="/../img/post/image-20240613022224355-17182165461451.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>喝杯coffee！</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.png" target="_blank"><img class="post-qr-code-img" src="/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式"><img class="cover" src="/../img/post/image-20240613022241567-17182165624671.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">抽象工厂模式</div></div></a></div><div class="next-post pull-right"><a href="/2023/09/24/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" title="MySQL"><img class="cover" src="/image/file_picture11.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/real.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">hodong</div><div class="author-info__description">不知名小趴菜</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/wuhaodonggg?tab=repositories"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">哈喽！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">工厂方法模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#if-else%E5%AE%9E%E7%8E%B0%E9%9C%80%E6%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">if-else实现需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">工厂模式优化代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%8F%91%E5%A5%96%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">定义发奖接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%A5%96%E5%93%81%E5%8F%91%E6%94%BE%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">实现奖品发放接口</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%98%E6%83%A0%E5%88%B8"><span class="toc-number">1.2.1.2.1.</span> <span class="toc-text">优惠券</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%89%A9%E5%95%86%E5%93%81"><span class="toc-number">1.2.1.2.2.</span> <span class="toc-text">实物商品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%85%91%E6%8D%A2%E5%8D%A1"><span class="toc-number">1.2.1.2.3.</span> <span class="toc-text">第三方兑换卡</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%95%86%E5%BA%97%E5%B7%A5%E5%8E%82"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">创建商店工厂</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E7%B1%BB"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">编写测试类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/05/14/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E7%BB%8F/" title="面经"><img src="/image/file_picture12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面经"/></a><div class="content"><a class="title" href="/2024/05/14/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E7%BB%8F/" title="面经">面经</a><time datetime="2024-05-14T15:36:13.000Z" title="发表于 2024-05-14 23:36:13">2024-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/12/%E5%BE%AE%E6%9C%8D%E5%8A%A1/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务"><img src="/image/file_picture12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微服务"/></a><div class="content"><a class="title" href="/2024/05/12/%E5%BE%AE%E6%9C%8D%E5%8A%A1/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="微服务">微服务</a><time datetime="2024-05-12T15:20:41.000Z" title="发表于 2024-05-12 23:20:41">2024-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/05/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="中间件"><img src="/image/file_picture12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="中间件"/></a><div class="content"><a class="title" href="/2024/05/05/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="中间件">中间件</a><time datetime="2024-05-05T15:25:38.000Z" title="发表于 2024-05-05 23:25:38">2024-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式"><img src="/../img/post/image-20240613022241567-17182165624671.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="抽象工厂模式"/></a><div class="content"><a class="title" href="/2023/10/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="抽象工厂模式">抽象工厂模式</a><time datetime="2023-10-01T12:42:09.000Z" title="发表于 2023-10-01 20:42:09">2023-10-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" title="工厂方法模式"><img src="/../img/post/image-20240613022224355-17182165461451.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工厂方法模式"/></a><div class="content"><a class="title" href="/2023/09/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" title="工厂方法模式">工厂方法模式</a><time datetime="2023-09-30T13:32:09.000Z" title="发表于 2023-09-30 21:32:09">2023-09-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By hodong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'vbGqB51mUnImof53RlCtlSVD-MdYXbMMI',
+      appKey: 'iFwryqC0JFpwvxRJdZjLZG01',
+      avatar: 'hodong',
+      serverURLs: 'https://vbgqb51m.api.lncldglobal.com',
+      emojiMaps: {"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png"},
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script src="/js/jquery.js"></script><script src="/js/foot.js"></script><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script src="http://cdn.bootcss.com/pace/1.0.2/pace.min.js" async></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script>(() => {
+  const isChatBtn = true
+  const isChatHideShow = true
+
+  if (isChatBtn) {
+    const close = () => {
+      Chatra('minimizeWidget')
+      Chatra('hide')
+    }
+
+    const open = () => {
+      Chatra('openChat', true)
+      Chatra('show')
+    }
+
+    window.ChatraSetup = {
+      startHidden: true
+    }
+  
+    window.chatBtnFn = () => {
+      const isShow = document.getElementById('chatra').classList.contains('chatra--expanded')
+      isShow ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        Chatra('hide')
+      },
+      show: () => {
+        Chatra('show')
+      }
+    }
+  }
+
+  (function(d, w, c) {
+    w.ChatraID = 'kuKerzDwdrqGMMJdK'
+    var s = d.createElement('script')
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments)
+    }
+    s.async = true
+    s.src = 'https://call.chatra.io/chatra.js'
+    if (d.head) d.head.appendChild(s)
+  })(document, window, 'Chatra')
+
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
